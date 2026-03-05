@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Menu, X, Download } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const links = [
@@ -12,9 +12,35 @@ const links = [
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState("");
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      setScrolled(window.scrollY > 50);
+
+      const sections = links.map((l) => l.href.slice(1));
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sections[i]);
+        if (el && el.getBoundingClientRect().top <= 120) {
+          setActive(sections[i]);
+          return;
+        }
+      }
+      setActive("");
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? "bg-background/90 backdrop-blur-md border-b border-border shadow-sm"
+          : "bg-transparent"
+      }`}
+    >
       <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
         <a href="#" className="font-display text-xl text-foreground">
           Michael<span className="text-primary">.</span>
@@ -26,12 +52,25 @@ const Navbar = () => {
             <li key={l.href}>
               <a
                 href={l.href}
-                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                className={`text-sm font-medium transition-colors ${
+                  active === l.href.slice(1)
+                    ? "text-primary"
+                    : "text-muted-foreground hover:text-primary"
+                }`}
               >
                 {l.label}
               </a>
             </li>
           ))}
+          <li>
+            <a
+              href="/Michael_CV.pdf"
+              download
+              className="inline-flex items-center gap-1.5 text-sm font-medium bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:opacity-90 transition-opacity"
+            >
+              <Download size={14} /> Resume
+            </a>
+          </li>
         </ul>
 
         {/* Mobile toggle */}
@@ -59,12 +98,26 @@ const Navbar = () => {
                   <a
                     href={l.href}
                     onClick={() => setOpen(false)}
-                    className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                    className={`text-sm font-medium transition-colors ${
+                      active === l.href.slice(1)
+                        ? "text-primary"
+                        : "text-muted-foreground hover:text-primary"
+                    }`}
                   >
                     {l.label}
                   </a>
                 </li>
               ))}
+              <li>
+                <a
+                  href="/Michael_CV.pdf"
+                  download
+                  onClick={() => setOpen(false)}
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-primary"
+                >
+                  <Download size={14} /> Download Resume
+                </a>
+              </li>
             </ul>
           </motion.div>
         )}
