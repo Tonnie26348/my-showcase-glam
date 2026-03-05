@@ -1,5 +1,29 @@
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
+
+const contactMethods = [
+  {
+    icon: Mail,
+    label: "Email",
+    value: "michaelsimintei2019@gmail.com",
+    href: "mailto:michaelsimintei2019@gmail.com",
+    desc: "Best for project inquiries",
+  },
+  {
+    icon: Phone,
+    label: "Phone",
+    value: "+254 796 865948",
+    href: "tel:+254796865948",
+    desc: "Available during business hours",
+  },
+  {
+    icon: MessageCircle,
+    label: "WhatsApp",
+    value: "Send a message",
+    href: "https://wa.me/254796865948",
+    desc: "Quick responses guaranteed",
+  },
+];
 
 const Contact = () => {
   return (
@@ -13,11 +37,11 @@ const Contact = () => {
           <p className="text-sm font-semibold tracking-widest uppercase text-primary mb-3">
             Let's Connect
           </p>
-          <h2 className="text-3xl md:text-4xl font-display text-foreground mb-6">
+          <h2 className="text-3xl md:text-4xl font-display text-foreground mb-4">
             Get In Touch
           </h2>
           <p className="text-muted-foreground mb-10 max-w-lg mx-auto">
-            Looking for a skilled Land Surveyor or Drone Pilot? I'd love to hear about your project. Reach out and let's discuss how I can help.
+            Looking for a skilled Land Surveyor or Drone Pilot? I'd love to hear about your project. Reach out through any channel below.
           </p>
         </motion.div>
 
@@ -26,31 +50,35 @@ const Contact = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.15 }}
-          className="grid sm:grid-cols-3 gap-6"
+          className="grid sm:grid-cols-3 gap-4 mb-8"
         >
-          <a
-            href="mailto:michaelsimintei2019@gmail.com"
-            className="bg-background border border-border rounded-xl p-6 hover:border-primary/30 hover:shadow-md transition-all group"
-          >
-            <Mail size={24} className="text-primary mx-auto mb-3" />
-            <p className="font-semibold text-foreground text-sm mb-1">Email</p>
-            <p className="text-xs text-muted-foreground break-all">michaelsimintei2019@gmail.com</p>
-          </a>
+          {contactMethods.map((c, i) => (
+            <a
+              key={i}
+              href={c.href}
+              target={c.href.startsWith("http") ? "_blank" : undefined}
+              rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined}
+              className="bg-background border border-border rounded-xl p-6 hover:border-primary/30 hover:shadow-md hover:-translate-y-1 transition-all duration-300 group"
+            >
+              <div className="w-12 h-12 rounded-full bg-accent flex items-center justify-center mx-auto mb-3 group-hover:bg-primary transition-colors duration-300">
+                <c.icon size={20} className="text-accent-foreground group-hover:text-primary-foreground transition-colors duration-300" />
+              </div>
+              <p className="font-semibold text-foreground text-sm mb-0.5">{c.label}</p>
+              <p className="text-xs text-primary font-medium mb-1 break-all">{c.value}</p>
+              <p className="text-[11px] text-muted-foreground">{c.desc}</p>
+            </a>
+          ))}
+        </motion.div>
 
-          <a
-            href="tel:+254796865948"
-            className="bg-background border border-border rounded-xl p-6 hover:border-primary/30 hover:shadow-md transition-all group"
-          >
-            <Phone size={24} className="text-primary mx-auto mb-3" />
-            <p className="font-semibold text-foreground text-sm mb-1">Phone</p>
-            <p className="text-xs text-muted-foreground">+254 796 865948</p>
-          </a>
-
-          <div className="bg-background border border-border rounded-xl p-6">
-            <MapPin size={24} className="text-primary mx-auto mb-3" />
-            <p className="font-semibold text-foreground text-sm mb-1">Location</p>
-            <p className="text-xs text-muted-foreground">Kenya</p>
-          </div>
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          className="flex items-center justify-center gap-2 text-sm text-muted-foreground"
+        >
+          <MapPin size={14} className="text-primary" />
+          <span>Based in Kenya — available for projects nationwide</span>
         </motion.div>
       </div>
     </section>
