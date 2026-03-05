@@ -1,5 +1,12 @@
 import { motion } from "framer-motion";
+import { Award, Shield, Compass } from "lucide-react";
 import droneImg from "@/assets/drone-pilot.jpg";
+
+const highlights = [
+  { icon: Award, label: "Certified Land Surveyor" },
+  { icon: Shield, label: "Licensed Remote Pilot" },
+  { icon: Compass, label: "GIS & Cartography Diploma" },
+];
 
 const About = () => {
   return (
@@ -10,13 +17,17 @@ const About = () => {
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="rounded-2xl overflow-hidden shadow-xl aspect-[4/5] max-h-[550px]"
+          className="relative"
         >
-          <img
-            src={droneImg}
-            alt="Michael with drone equipment preparing for aerial mapping"
-            className="w-full h-full object-cover"
-          />
+          <div className="rounded-2xl overflow-hidden shadow-xl aspect-[4/5] max-h-[550px] border border-border/50">
+            <img
+              src={droneImg}
+              alt="Michael with drone equipment preparing for aerial mapping"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          {/* Decorative accent */}
+          <div className="absolute -z-10 top-6 left-6 w-full h-full rounded-2xl border-2 border-primary/20" />
         </motion.div>
 
         <motion.div
@@ -41,6 +52,23 @@ const About = () => {
             <p>
               Currently working at Geoid Technologies Limited, I lead mapping operations including large-scale aerial surveys and GNSS-based ground control networks.
             </p>
+          </div>
+
+          {/* Certification badges */}
+          <div className="flex flex-wrap gap-3 mt-8">
+            {highlights.map((h, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.3 + i * 0.1 }}
+                className="flex items-center gap-2 bg-accent/60 border border-border rounded-full px-4 py-2"
+              >
+                <h.icon size={14} className="text-primary" />
+                <span className="text-xs font-medium text-accent-foreground">{h.label}</span>
+              </motion.div>
+            ))}
           </div>
         </motion.div>
       </div>
