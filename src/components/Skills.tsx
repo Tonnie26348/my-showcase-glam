@@ -1,15 +1,19 @@
 import { motion } from "framer-motion";
+import { Map, Monitor, Plane } from "lucide-react";
 
 const skillGroups = [
   {
+    icon: Map,
     title: "Survey & Mapping",
     skills: ["Topographical Surveys", "Land Subdivision", "Cadastral Surveys", "Engineering Surveys", "GNSS RTK Operations", "Ground Control Points"],
   },
   {
+    icon: Monitor,
     title: "Software & Tools",
     skills: ["AutoCAD Civil 3D", "ArcGIS", "CAD Survey", "GPS Data Processing", "GIS Data Integration"],
   },
   {
+    icon: Plane,
     title: "Drone Operations",
     skills: ["Aerial Mapping", "Remote Pilot License", "Drone Instructor", "Agricultural Drones", "Turbine Inspection", "Manual UAV Control"],
   },
@@ -41,7 +45,11 @@ const Skills = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.15 }}
+              className="bg-card border border-border rounded-xl p-6"
             >
+              <div className="w-10 h-10 rounded-lg bg-accent flex items-center justify-center mb-4">
+                <g.icon size={20} className="text-accent-foreground" />
+              </div>
               <h3 className="font-semibold text-foreground mb-4">{g.title}</h3>
               <div className="flex flex-wrap gap-2">
                 {g.skills.map((s) => (
