@@ -34,7 +34,7 @@ const CountUp = ({ target, suffix = "" }: { target: number; suffix?: string }) =
   return <span ref={ref}>{count}{suffix}</span>;
 };
 
-import { useState, useEffect } from "react";
+
 
 const About = () => {
   return (
