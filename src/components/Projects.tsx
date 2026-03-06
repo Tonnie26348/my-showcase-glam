@@ -48,7 +48,10 @@ const projects = [
 
 const Projects = () => {
   return (
-    <section id="projects" className="section-padding bg-card">
+    <section id="projects" className="section-padding bg-card relative overflow-hidden">
+      {/* Decorative element */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -63,7 +66,8 @@ const Projects = () => {
             Featured Projects
           </h2>
           <p className="text-muted-foreground mt-3 max-w-lg mx-auto text-sm">
-            A selection of major surveying and drone mapping projects I've led and contributed to across Kenya.
+            A selection of major surveying and drone mapping projects I've led
+            and contributed to across Kenya.
           </p>
         </motion.div>
 
@@ -77,16 +81,33 @@ const Projects = () => {
               transition={{ delay: i * 0.08 }}
               className="bg-background border border-border rounded-xl p-6 hover:shadow-lg hover:border-primary/30 hover:-translate-y-1 transition-all duration-300 group relative"
             >
+              {/* Project number */}
+              <span className="absolute top-4 right-4 text-[11px] font-bold text-muted-foreground/30 font-display">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+
               <div className="flex items-start justify-between mb-4">
                 <div className="w-10 h-10 rounded-lg bg-accent flex items-center justify-center group-hover:bg-primary transition-colors duration-300">
-                  <p.icon size={20} className="text-accent-foreground group-hover:text-primary-foreground transition-colors duration-300" />
+                  <p.icon
+                    size={20}
+                    className="text-accent-foreground group-hover:text-primary-foreground transition-colors duration-300"
+                  />
                 </div>
-                <ArrowUpRight size={16} className="text-muted-foreground/0 group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+                <ArrowUpRight
+                  size={16}
+                  className="text-muted-foreground/0 group-hover:text-primary group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300 mt-6"
+                />
               </div>
-              <h3 className="font-semibold text-foreground text-sm mb-1">{p.title}</h3>
+              <h3 className="font-semibold text-foreground text-sm mb-1">
+                {p.title}
+              </h3>
               <p className="text-xs text-primary font-medium mb-1">{p.role}</p>
-              <p className="text-[11px] text-muted-foreground font-medium mb-3 bg-accent/50 inline-block px-2 py-0.5 rounded-full">{p.scale}</p>
-              <p className="text-sm text-muted-foreground leading-relaxed">{p.desc}</p>
+              <p className="text-[11px] text-muted-foreground font-medium mb-3 bg-accent/50 inline-block px-2 py-0.5 rounded-full">
+                {p.scale}
+              </p>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                {p.desc}
+              </p>
             </motion.div>
           ))}
         </div>

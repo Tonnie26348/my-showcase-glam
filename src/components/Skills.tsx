@@ -5,26 +5,47 @@ const skillGroups = [
   {
     icon: Map,
     title: "Survey & Mapping",
-    color: "primary",
-    skills: ["Topographical Surveys", "Land Subdivision", "Cadastral Surveys", "Engineering Surveys", "GNSS RTK Operations", "Ground Control Points"],
+    skills: [
+      "Topographical Surveys",
+      "Land Subdivision",
+      "Cadastral Surveys",
+      "Engineering Surveys",
+      "GNSS RTK Operations",
+      "Ground Control Points",
+    ],
   },
   {
     icon: Monitor,
     title: "Software & Tools",
-    color: "secondary",
-    skills: ["AutoCAD Civil 3D", "ArcGIS Pro", "CAD Survey", "GPS Data Processing", "GIS Data Integration", "Drone Flight Planning"],
+    skills: [
+      "AutoCAD Civil 3D",
+      "ArcGIS Pro",
+      "CAD Survey",
+      "GPS Data Processing",
+      "GIS Data Integration",
+      "Drone Flight Planning",
+    ],
   },
   {
     icon: Plane,
     title: "Drone Operations",
-    color: "primary",
-    skills: ["Aerial Mapping", "Remote Pilot License", "Drone Instructor", "Agricultural Drones", "Turbine Inspection", "Manual UAV Control"],
+    skills: [
+      "Aerial Mapping",
+      "Remote Pilot License",
+      "Drone Instructor",
+      "Agricultural Drones",
+      "Turbine Inspection",
+      "Manual UAV Control",
+    ],
   },
 ];
 
 const Skills = () => {
   return (
-    <section id="skills" className="section-padding">
+    <section id="skills" className="section-padding relative overflow-hidden">
+      {/* Top divider */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/20 to-transparent" />
+
       <div className="max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -39,7 +60,8 @@ const Skills = () => {
             Skills & Competencies
           </h2>
           <p className="text-muted-foreground mt-3 max-w-md mx-auto text-sm">
-            A comprehensive toolkit spanning traditional surveying, modern software, and drone technology.
+            A comprehensive toolkit spanning traditional surveying, modern
+            software, and drone technology.
           </p>
         </motion.div>
 
@@ -51,10 +73,13 @@ const Skills = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.15 }}
-              className="bg-card border border-border rounded-xl p-6 hover:border-primary/20 transition-colors"
+              className="bg-card border border-border rounded-xl p-6 hover:border-primary/20 hover:shadow-md transition-all duration-300 group"
             >
-              <div className="w-10 h-10 rounded-lg bg-accent flex items-center justify-center mb-4">
-                <g.icon size={20} className="text-accent-foreground" />
+              <div className="w-10 h-10 rounded-lg bg-accent flex items-center justify-center mb-4 group-hover:bg-primary transition-colors duration-300">
+                <g.icon
+                  size={20}
+                  className="text-accent-foreground group-hover:text-primary-foreground transition-colors duration-300"
+                />
               </div>
               <h3 className="font-semibold text-foreground mb-4">{g.title}</h3>
               <div className="flex flex-wrap gap-2">
