@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
 import { MapPin, Mail, Phone, ChevronDown, Download } from "lucide-react";
+import { useState, useEffect } from "react";
 import surveyImg from "@/assets/survey-field.jpg";
+
+const roles = ["Land Surveyor", "Drone Pilot", "GIS Specialist", "Aerial Mapper"];
 
 const stats = [
   { value: "3+", label: "Years Experience" },
@@ -9,10 +12,30 @@ const stats = [
 ];
 
 const Hero = () => {
+  const [roleIndex, setRoleIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRoleIndex((prev) => (prev + 1) % roles.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <section className="min-h-screen flex items-center section-padding pt-28 relative overflow-hidden">
       {/* Subtle background pattern */}
-      <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)', backgroundSize: '40px 40px' }} />
+      <div
+        className="absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 1px 1px, hsl(var(--foreground)) 1px, transparent 0)",
+          backgroundSize: "40px 40px",
+        }}
+      />
+
+      {/* Accent glow */}
+      <div className="absolute top-20 right-1/4 w-72 h-72 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-20 left-1/4 w-60 h-60 bg-secondary/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto w-full grid md:grid-cols-2 gap-12 items-center relative z-10">
         {/* Text */}
@@ -37,14 +60,28 @@ const Hero = () => {
             Michael{" "}
             <span className="text-gradient">Simintei</span>
           </h1>
-          <p className="text-lg md:text-xl text-primary font-medium mb-4">
-            Land Surveyor & Drone Pilot
-          </p>
+
+          {/* Animated role */}
+          <div className="h-8 md:h-9 mb-4 overflow-hidden">
+            <motion.p
+              key={roleIndex}
+              initial={{ y: 30, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -30, opacity: 0 }}
+              transition={{ duration: 0.4 }}
+              className="text-lg md:text-xl text-primary font-medium"
+            >
+              {roles[roleIndex]}
+            </motion.p>
+          </div>
+
           <p className="text-base text-muted-foreground max-w-lg mb-8 leading-relaxed">
-            Delivering precision mapping solutions through advanced surveying techniques, GNSS operations, and aerial drone technology across Kenya.
+            Delivering precision mapping solutions through advanced surveying
+            techniques, GNSS operations, and aerial drone technology across
+            Kenya.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-3 mb-10">
+          <div className="flex flex-wrap gap-3 mb-10">
             <a
               href="#contact"
               className="inline-flex items-center justify-center gap-2 bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium text-sm hover:opacity-90 transition-opacity shadow-md"
@@ -75,8 +112,12 @@ const Hero = () => {
           >
             {stats.map((s, i) => (
               <div key={i} className="text-center">
-                <p className="text-2xl md:text-3xl font-display font-bold text-primary">{s.value}</p>
-                <p className="text-xs text-muted-foreground mt-0.5">{s.label}</p>
+                <p className="text-2xl md:text-3xl font-display font-bold text-primary">
+                  {s.value}
+                </p>
+                <p className="text-xs text-muted-foreground mt-0.5">
+                  {s.label}
+                </p>
               </div>
             ))}
           </motion.div>
@@ -87,15 +128,15 @@ const Hero = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="relative"
+          className="relative hidden md:block"
         >
           <div className="rounded-2xl overflow-hidden shadow-2xl aspect-[3/4] max-h-[600px] border border-border/50">
             <img
               src={surveyImg}
               alt="Michael Simintei conducting land survey in the field"
               className="w-full h-full object-cover"
+              loading="eager"
             />
-            {/* Gradient overlay at bottom */}
             <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
           </div>
 
